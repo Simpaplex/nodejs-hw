@@ -3,7 +3,7 @@ import 'dotenv/config';
 import cors from 'cors';
 import { connectMongoDB } from './db/connectMongoDB.js';
 import helmet from 'helmet';
-import notesRoutes from "./routes/notesRoutes.js";
+import notesRoutes from './routes/notesRoutes.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
 import { logger } from './middleware/logger.js';
@@ -16,7 +16,6 @@ app.use(logger);
 app.use(express.json());
 app.use(cors());
 app.use(helmet());
-
 
 app.use(notesRoutes);
 
