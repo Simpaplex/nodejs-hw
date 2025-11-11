@@ -29,18 +29,20 @@ export const noteIdSchema = {
 export const createNoteSchema = {
   [Segments.BODY]: Joi.object({
     title: Joi.string().min(1).required(),
-    content: Joi.string().default(' '),
+    content: Joi.string().trim().allow(''),
     tag: Joi.string()
-      .valid(...TAGS)
-      .default('Todo'),
+      .valid(...TAGS),
   }),
 };
 
 export const updateNoteSchema = {
   [Segments.BODY]: Joi.object({
-    title: Joi.string().min(1),
+    title: Joi.string().min(1).messages({
+      'string.base': 'Title must be only string',
+      'string.min': 'Title should have at least 1 characters',
+    }),
     content: Joi.string(),
-    tag: Joi.string(),
+    tag: Joi.string().valid(...TAGS),
   }).min(1),
   [Segments.PARAMS]: Joi.object({
     noteId: Joi.string().custom(objectIdValidator).required(),

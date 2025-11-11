@@ -36,7 +36,7 @@ noteSchema.index(
     name: 'NoteTextIndex',
     weights: {
       title: 10,
-      content: 2,
+      content: 1,
     },
     default_language: 'english',
   },
