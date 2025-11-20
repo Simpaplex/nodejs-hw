@@ -75,7 +75,7 @@ export async function deleteNote(req, res) {
 
 export async function updateNote(req, res) {
   const { noteId } = req.params;
-  const updatedNote = await Note.findByIdAndUpdate(
+  const updatedNote = await Note.findOneAndUpdate(
     noteId,
     {
       _id: noteId,
