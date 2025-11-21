@@ -11,7 +11,7 @@ import { errors } from 'celebrate';
 import cookieParser from 'cookie-parser';
 import authRoutes from './routes/authRoutes.js';
 
-const PORT = process.env.PORT ?? 3000;
+const PORT = process.env.PORT ?? 3030;
 
 const app = express();
 
