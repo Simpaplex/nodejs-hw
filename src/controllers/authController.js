@@ -130,24 +130,19 @@ export const requestResetEmail = async (req, res) => {
   const template = handlebars.compile(templateSource);
 
   const html = template({
-    name: user.username,
+    userName: user.username,
     link: `${process.env.FRONTEND_DOMAIN}/reset-password?token=${resetToken}`,
   });
 
-
-console.log("Start", resetToken, "End");
-
-
   try {
-    console.log("start send email");
-
-  await sendEmail({
+    await sendEmail({
     from: process.env.SMTP_FROM,
     to: email,
     subject: 'Reset your password',
     html,
   });
-  } catch {
+  } catch (error) {
+    console.error("Error", error.message);
   throw createHttpError(
     500,
     "Failed to send the email, please try again later.");
@@ -171,16 +166,10 @@ export const resetPassword = async (req, res) => {
     throw createHttpError(401, 'Invalid or expired token');
   }
 
-  console.log("Payload", payload);
-
-
   const user = await User.findOne({
     _id: payload.sub,
     email: payload.email,
   });
-
-  console.log("User", user);
-
 
   if (!user) {
     throw createHttpError(404, "User not found");
@@ -192,7 +181,6 @@ export const resetPassword = async (req, res) => {
     { _id: user._id },
     { password: hashedPassword },
   );
-
 
   await Session.deleteMany({
     userId: user._id,
